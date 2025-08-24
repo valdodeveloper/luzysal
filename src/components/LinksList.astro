@@ -1,0 +1,10 @@
+---
+const { links = [] } = Astro.props;
+---
+<div class="flex flex-col gap-4">
+  {links.map(link => (
+    <a href={link.url} target="_blank" rel="noopener" class="block px-6 py-3 rounded-lg bg-white text-slate-900 font-semibold shadow hover:bg-slate-100 transition">
+      {link.label}
+    </a>
+  ))}
+</div>

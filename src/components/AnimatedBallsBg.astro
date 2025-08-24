@@ -1,0 +1,45 @@
+---
+// Fondo animado: burbujas dinámicas con aparición, movimiento y desvanecimiento.
+// Generamos una cantidad fija (por ej. 18) para efectos suaves sin JS pesado.
+const bubbles = Array.from({ length: 18 });
+---
+<div class="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
+  {bubbles.map((_, i) => {
+    // Valores pseudo-aleatorios derivables del índice (para SSR determinista)
+    const seed = i + 1;
+    const size = 60 + (seed * 37) % 140; // 60 - 199px
+    const left = (seed * 53) % 100; // porcentaje
+    const delay = (seed * 173) % 9000; // ms
+    const duration = 12000 + ((seed * 331) % 16000); // 12s - 28s
+    const hue = (seed * 47) % 360;
+    const opacity = 0.15 + ((seed * 23) % 50) / 100; // 0.15 - 0.65
+    const driftX = ((seed * 97) % 60) - 30; // -30 a 30 vw
+    const scale = 0.7 + ((seed * 19) % 50) / 100; // 0.7 - 1.19
+    return (
+      <div
+        style={`--size:${size}px;--left:${left}%;--delay:${delay}ms;--duration:${duration}ms;--hue:${hue};--opacity:${opacity};--driftX:${driftX}vw;--scale:${scale};`}
+        class="bubble absolute rounded-full will-change-transform"
+      />
+    );
+  })}
+</div>
+
+<style>
+  .bubble {
+    top: 100%;
+    left: var(--left);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at 30% 30%, hsl(var(--hue) 90% 75% / 0.9), hsl(var(--hue) 90% 55% / 0.4));
+    opacity: 0;
+    animation: rise var(--duration) linear infinite;
+    animation-delay: var(--delay);
+    filter: blur(2px) saturate(1.2);
+  }
+  @keyframes rise {
+    0% { transform: translate3d(0,0,0) scale(calc(var(--scale)*0.4)); opacity: 0; }
+    8% { opacity: var(--opacity); }
+    55% { opacity: var(--opacity); }
+    100% { transform: translate3d(var(--driftX), -125vh, 0) scale(var(--scale)); opacity: 0; }
+  }
+</style>
