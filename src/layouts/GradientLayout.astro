@@ -1,17 +1,18 @@
 ---
-const { gradient = 'linear-gradient(135deg,#667eea,#764ba2)', title = 'Título', avatar, subtitle, panel = true } = Astro.props;
+const { gradient = 'linear-gradient(135deg,#667eea,#764ba2)', title = 'Título', avatar, subtitle, panel = true, bodyClass = '' } = Astro.props;
 ---
 <html lang="es" class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <slot name="head" />
   </head>
-  <body class="min-h-screen flex flex-col items-center justify-center" style={`background:${gradient}`}>  
+  <body class={`min-h-screen flex flex-col items-center justify-center ${bodyClass}`} style={`background:${gradient}`}>  
     {avatar && (
       <div class="flex flex-col items-center mb-4">
-        <img src={avatar} alt="Avatar" class="w-32 h-32 rounded-full shadow-xl ring-4 ring-white/40 object-cover" />
-        {subtitle && <p class="mt-3 text-white/90 text-lg font-medium drop-shadow">{subtitle}</p>}
+  <img src={avatar} alt="Avatar" class="w-40 h-40 rounded-full shadow-2xl ring-4 ring-white/40 object-cover" />
+  {subtitle && <p class="mt-4 text-white/95 text-xl font-semibold drop-shadow-md text-center px-4 max-w-xl leading-snug">{subtitle}</p>}
       </div>
     )}
     <main class={`w-full max-w-md p-6 rounded-xl transition ${panel ? 'bg-white/80 shadow-xl' : 'bg-transparent shadow-none'}`}>

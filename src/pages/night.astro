@@ -1,0 +1,27 @@
+---
+import GradientLayout from '../layouts/GradientLayout.astro';
+import StarfieldBg from '../components/StarfieldBg.astro';
+const avatar = '/src/assets/copia.jpg';
+const links = [
+  { label: 'Portfolio', url: '#', color: 'bg-white/10 hover:bg-white/20 text-white' },
+  { label: 'Blog', url: '#', color: 'bg-white/10 hover:bg-white/20 text-white' },
+  { label: 'Contacto', url: '#', color: 'bg-white/10 hover:bg-white/20 text-white' },
+];
+const nightGradient = 'radial-gradient(circle at 50% 35%,#1d2640 0%,#0d1525 60%,#060a14 100%)';
+---
+<GradientLayout gradient={nightGradient} title="Night" avatar={avatar} subtitle="Explora las estrellas" panel={false} bodyClass="font-josefin">
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      .font-josefin { font-family: 'Josefin Sans', sans-serif; }
+    </style>
+  </Fragment>
+  <StarfieldBg />
+  <div class="flex flex-col gap-5 w-full max-w-lg">
+    {links.map(link => (
+  <a href={link.url} class={`px-7 py-4 rounded-xl backdrop-blur-sm font-semibold tracking-wide transition border border-white/10 shadow shadow-black/50 hover:scale-[1.03] ${link.color}`}>{link.label}</a>
+    ))}
+  </div>
+</GradientLayout>
