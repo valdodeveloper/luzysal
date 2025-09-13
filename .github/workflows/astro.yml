@@ -1,0 +1,31 @@
+name: Deploy Astro to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Despliegue activado cuando se hace push a la rama main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-22.04 # Versión de Ubuntu
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22' # Utiliza una versión compatible con Astro
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # Usa el token personalizado
+        publish_dir: dist
