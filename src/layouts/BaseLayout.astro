@@ -1,11 +1,13 @@
 ---
-const { title = 'Contacto DGT' } = Astro.props;
+const { title = "Contacto DGT" } = Astro.props;
+import MusicIcon from '../assets/music_icon.png';
 ---
+
 <html lang="es" class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href={MusicIcon.src} />
     <title>{title}</title>
   </head>
   <body class="min-h-full bg-slate-950 text-slate-100 antialiased">
@@ -16,5 +18,5 @@ const { title = 'Contacto DGT' } = Astro.props;
 </html>
 
 <style is:global>
-@import '../assets/styles/tailwind.css';
+  @import "../assets/styles/tailwind.css";
 </style>

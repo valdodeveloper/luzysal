@@ -1,8 +1,10 @@
 ---
 const { gradient = 'linear-gradient(135deg,#667eea,#764ba2)', title = 'Título', avatar, subtitle, panel = true, bodyClass = '' } = Astro.props;
+import MusicIcon from '../assets/music_icon.png';
 ---
 <html lang="es" class="h-full">
   <head>
+    <link rel="icon" type="image/png" href={MusicIcon.src} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
