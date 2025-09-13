@@ -1,0 +1,52 @@
+---
+/*
+  Fondo animado de notas musicales.
+  Props:
+  - count: número de notas (default 24)
+  - colors: array de colores (HSL/HEX) para alternar (default tonos verdosos/morados)
+  - minMs / maxMs: rango de duración del ascenso
+*/
+const { count = 24, colors = ['#7CFFCB','#B983FF','#43e97b','#38f9d7','#ffffffaa'], minMs = 9000, maxMs = 22000 } = Astro.props;
+const notes = Array.from({ length: count });
+const chars = ['♪','♫','♬','♩'];
+---
+<div class="absolute inset-0 -z-20 overflow-hidden pointer-events-none select-none">
+  {notes.map((_, i) => {
+    const seed = i + 101;
+    const size = 18 + (seed * 29) % 28; // 18 - 45 px
+    const left = (seed * 43) % 100; // 0-99 %
+    const delay = (seed * 197) % 12000; // ms
+    const duration = minMs + ((seed * 311) % Math.max(1000, maxMs - minMs));
+    const rot = ((seed * 37) % 80) - 40; // -40 a 40 deg
+    const sway = ((seed * 53) % 60) - 30; // -30 a 30 vw
+    const color = colors[seed % colors.length];
+    const char = chars[seed % chars.length];
+    const opacity = 0.18 + ((seed * 17) % 50) / 100; // 0.18 - 0.68
+    return (
+      <span
+        class="note absolute will-change-transform"
+        style={`--size:${size}px;--left:${left}%;--delay:${delay}ms;--duration:${duration}ms;--rot:${rot}deg;--sway:${sway}vw;--color:${color};--opacity:${opacity};`}
+      >{char}</span>
+    );
+  })}
+</div>
+<style>
+  .note {
+    top: 100%;
+    left: var(--left);
+    font-size: var(--size);
+    line-height: 1;
+    color: var(--color);
+    opacity: 0;
+    text-shadow: 0 4px 12px color-mix(in oklab, var(--color) 50%, black 50%);
+    animation: fly var(--duration) linear infinite;
+    animation-delay: var(--delay);
+    filter: drop-shadow(0 2px 8px color-mix(in oklab, var(--color) 40%, #000 60%));
+  }
+  @keyframes fly {
+    0% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+    10% { opacity: var(--opacity); }
+    60% { opacity: var(--opacity); }
+    100% { transform: translate3d(var(--sway), -120vh, 0) rotate(var(--rot)); opacity: 0; }
+  }
+</style>
